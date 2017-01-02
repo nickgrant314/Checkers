@@ -19,7 +19,9 @@ public class CheckerPiece {
 	}
 	
 	/*
-	 * The following 4 functions are available to move checker pieces
+	 * Modifiers
+	 * 
+	 * The following 4 functions are available to move a checker piece
 	 * (not accounting for King movement yet)
 	 */
 	void moveDownLeft(){
@@ -41,6 +43,17 @@ public class CheckerPiece {
 		this.bLoc.shiftX(1);
 		this.bLoc.shiftY(-1);
 	}
+	
+	
+	/*
+	 * Accessors
+	 * 
+	 * Get any info about the Checker Piece we need
+	 */
+	int getTeamName(){
+		return team;
+	}
+	
 	
 	// return a String representation of this checker piece
 	public String toString() {

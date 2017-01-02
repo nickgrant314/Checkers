@@ -21,6 +21,7 @@ public class CheckerPieceTester {
 		cp1.moveDownRight();
 		System.out.println(cp1);
 		
+
 	}
 
 }
