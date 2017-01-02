@@ -43,28 +43,19 @@ public class CheckerBoard {
 	}
 	
 	//One piece attempts to move elsewhere 
-	boolean move(int xLoc1, int yLoc1, int xLoc2, int yLoc2, int teamName){
+	int move(int xLoc1, int yLoc1, int xLoc2, int yLoc2, int teamName){
 		if(yLoc1 >= grid.length || yLoc2 >= grid.length || xLoc1 >= grid[0].length || xLoc2 >= grid[0].length
-				|| yLoc1 < 0 || yLoc2 < 0 || xLoc1 < 0 || xLoc2 < 0){
-			System.out.println("One or more of the spaces you provided aren't on the board. Please try again.");
-			return false;
-		}
-		if(grid[yLoc1][xLoc1] == null){
-			System.out.println("There isn't a piece to move at the space you specified. Please try again.");
-			return false;
-		}
-		if(spaceOccupied(xLoc2,yLoc2)){
-			System.out.println("That space is occupied. Maybe try hopping that space?");
-			return false;
-		}
-		if(grid[yLoc1][xLoc1].getTeamName() != teamName){
-			System.out.println("That isn't your piece, so you can't move it. Please try again.");
-			return false;
-		}
+				|| yLoc1 < 0 || yLoc2 < 0 || xLoc1 < 0 || xLoc2 < 0) {printErrorMessages(1);return 1;}
+		if((Math.abs(xLoc2-xLoc1) != 1 || Math.abs(yLoc2-yLoc1) != 1) && !grid[yLoc1][xLoc1].king()) {printErrorMessages(5);return 5;}
+		if(grid[yLoc1][xLoc1] == null) {printErrorMessages(2);return 2;}
+		if(spaceOccupied(xLoc2,yLoc2)) {printErrorMessages(3);return 3;}
+		if(grid[yLoc1][xLoc1].getTeamName() != teamName) {printErrorMessages(4);return 4;}
 		
+		
+		//If deemed a valid move, execute it
 		grid[yLoc2][xLoc2] = new CheckerPiece(new BoardLoc(yLoc2,xLoc2), teamName);
 		grid[yLoc1][xLoc1] = null;
-		return true;
+		return 0;
 	}
 	
 	//One piece attempts to hop another piece
@@ -90,5 +81,27 @@ public class CheckerBoard {
 			}
 		}
 		return output;
+	}
+	
+	
+	/*
+	 * Purely here to organize all of the print statements in 1 place...code looks nicer this way
+	 */
+	void printErrorMessages(int errorCode){
+		if(errorCode == 1){System.out.println("One or more of the spaces you provided aren't on the board. Please try again.");}
+		if(errorCode == 2){System.out.println("There isn't a piece to move at the space you specified. Please try again.");}
+		if(errorCode == 3){System.out.println("That space is occupied. Maybe try hopping that space?");}
+		if(errorCode == 4){System.out.println("That isn't your piece, so you can't move it. Please try again.");}
+		if(errorCode == 5){System.out.println("The move you attempted to make is invalid with that piece.");}
+		
+		printValidActions();
+	}
+	
+	//Help list for the user
+	void printValidActions(){
+		System.out.println("The following actions are valid (for non-King players):");
+		System.out.println("'Move' Command: Specify a location one space diagonal and forward from your current position.");
+		System.out.println("'Hop' Command: Specify the location of the piece you want to hop. Piece must be diagonally");
+		System.out.println("in front of you and have an empty slot behind it diagonally in the same direction.");
 	}
 }
