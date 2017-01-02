@@ -50,8 +50,15 @@ public class CheckerPiece {
 	 * 
 	 * Get any info about the Checker Piece we need
 	 */
+	
+	//Return team name (currently an integer value, might change)
 	int getTeamName(){
 		return team;
+	}
+	
+	//Return true if a king piece
+	boolean king(){
+		return king;
 	}
 	
 	
