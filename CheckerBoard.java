@@ -42,6 +42,11 @@ public class CheckerBoard {
 		
 	}
 	
+	//For display purposes
+	CheckerPiece[][] getGrid(){
+		return grid;
+	}
+	
 	//One piece attempts to move elsewhere 
 	int move(int xLoc1, int yLoc1, int xLoc2, int yLoc2, int teamName){
 		if(yLoc1 >= grid.length || yLoc2 >= grid.length || xLoc1 >= grid[0].length || xLoc2 >= grid[0].length
